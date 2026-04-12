@@ -27,9 +27,9 @@ export async function proxy(request: NextRequest) {
 
   if (isAdmin) {
     // Determine the actual admin path
-    // If accessing via subdomain: /dashboard -> /admin/dashboard
-    // If accessing via direct path: /admin/dashboard -> /admin/dashboard (no rewrite needed)
-    const adminPath = isAdminHost ? `/admin${pathname}` : pathname;
+    // If accessing via subdomain and path doesn't already have /admin prefix: /dashboard -> /admin/dashboard
+    // If path already has /admin prefix: /admin/dashboard -> /admin/dashboard (no double prefix)
+    const adminPath = (isAdminHost && !pathname.startsWith("/admin")) ? `/admin${pathname}` : pathname;
     const loginPath = isAdminHost ? "/login" : "/admin/login";
     const authApiPath = isAdminHost ? "/api/auth/" : "/admin/api/auth/";
 
