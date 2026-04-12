@@ -50,16 +50,18 @@ jobs:
           source: docker-compose.prod.yml
           target: /opt/poet-portfolio
 
-      - name: Deploy on VPS
+      - name: Write .env and deploy on VPS
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
-          envs: GHCR_TOKEN,APP_IMAGE
+          envs: GHCR_TOKEN,APP_IMAGE,ENV_FILE
           script: |
             echo "$GHCR_TOKEN" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             cd /opt/poet-portfolio
+            mkdir -p uploads
+            echo "$ENV_FILE" > .env
             export APP_IMAGE=$APP_IMAGE
             docker compose -f docker-compose.prod.yml pull app
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
@@ -67,3 +69,4 @@ jobs:
         env:
           GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           APP_IMAGE: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          ENV_FILE: ${{ secrets.ENV_FILE }}
