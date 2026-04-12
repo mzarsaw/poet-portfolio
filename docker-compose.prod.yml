@@ -19,8 +19,6 @@ services:
   app:
     image: ${APP_IMAGE}
     restart: unless-stopped
-    ports:
-      - "3300:3000"
     depends_on:
       db:
         condition: service_healthy
@@ -37,16 +35,19 @@ services:
     networks:
       - internal
 
-  nginx-proxy-manager:
-    image: jc21/nginx-proxy-manager:latest
+  caddy:
+    image: caddy:2-alpine
     restart: unless-stopped
     ports:
       - "80:80"
       - "443:443"
-      - "81:81"
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN}
+      ADMIN_DOMAIN: ${ADMIN_DOMAIN}
     volumes:
-      - npm_data:/data
-      - npm_letsencrypt:/etc/letsencrypt
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       - app
     networks:
@@ -54,8 +55,8 @@ services:
 
 volumes:
   pgdata:
-  npm_data:
-  npm_letsencrypt:
+  caddy_data:
+  caddy_config:
 
 networks:
   internal:
