@@ -62,7 +62,7 @@ jobs:
             cd /opt/poet-portfolio
             mkdir -p uploads
             echo "$ENV_FILE" > .env
-            export APP_IMAGE=$APP_IMAGE
+            echo "APP_IMAGE=$APP_IMAGE" >> .env
             docker compose -f docker-compose.prod.yml down --remove-orphans
             docker compose -f docker-compose.prod.yml pull app
             docker compose -f docker-compose.prod.yml up -d
