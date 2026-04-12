@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("admin_users")
+}
+
+model Poem {
+  id        String   @id @default(cuid())
+  titleTr   String   @map("title_tr")
+  titleEn   String   @default("") @map("title_en")
+  contentTr String   @map("content_tr") @db.Text
+  contentEn String   @default("") @map("content_en") @db.Text
+  category  String   @default("")
+  slug          String   @unique
+  audioFilePath String   @default("") @map("audio_file_path")
+  featured      Boolean  @default(false)
+  published Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("poems")
+}
+
+model AudioWork {
+  id            String   @id @default(cuid())
+  titleTr       String   @map("title_tr")
+  titleEn       String   @default("") @map("title_en")
+  descriptionTr String   @default("") @map("description_tr") @db.Text
+  descriptionEn String   @default("") @map("description_en") @db.Text
+  filePath      String   @map("file_path")
+  category      String   @default("poetry")
+  duration      Int      @default(0)
+  featured      Boolean  @default(false)
+  published     Boolean  @default(false)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("audio_works")
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  name      String
+  role      String   @default("")
+  quoteTr   String   @map("quote_tr") @db.Text
+  quoteEn   String   @default("") @map("quote_en") @db.Text
+  published Boolean  @default(false)
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("testimonials")
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  filename  String
+  filePath  String   @map("file_path")
+  fileType  String   @map("file_type")
+  fileSize  Int      @map("file_size")
+  altText   String   @default("") @map("alt_text")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("media")
+}
+
+model SiteSetting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String @db.Text
+
+  @@map("site_settings")
+}
+
+model Page {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  titleTr           String   @map("title_tr")
+  titleEn           String   @default("") @map("title_en")
+  contentTr         String   @default("") @map("content_tr") @db.Text
+  contentEn         String   @default("") @map("content_en") @db.Text
+  metaTitleTr       String   @default("") @map("meta_title_tr")
+  metaTitleEn       String   @default("") @map("meta_title_en")
+  metaDescriptionTr String   @default("") @map("meta_description_tr") @db.Text
+  metaDescriptionEn String   @default("") @map("meta_description_en") @db.Text
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("pages")
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  subscribedAt DateTime @default(now()) @map("subscribed_at")
+
+  @@map("newsletter_subscribers")
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String   @default("")
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("contact_messages")
+}

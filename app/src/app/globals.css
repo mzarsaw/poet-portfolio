@@ -1,0 +1,149 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* === Theme: Mürekkep (Ink) === */
+:root,
+[data-theme="murekep"] {
+  --color-bg: 228 228 222;
+  --color-fg: 27 27 27;
+  --color-accent: 15 33 67;
+  --color-bg-alt: 214 214 206;
+  --color-fg-muted: 80 80 80;
+  --color-border: 200 200 190;
+}
+
+/* === Theme: Osmanlı Kütüphanesi (Ottoman Library) === */
+[data-theme="osmanli"] {
+  --color-bg: 245 245 220;
+  --color-fg: 89 95 57;
+  --color-accent: 139 98 18;
+  --color-bg-alt: 232 230 205;
+  --color-fg-muted: 120 125 85;
+  --color-border: 210 208 180;
+}
+
+/* === Theme: Turkuaz (Turquoise & White) === */
+[data-theme="turkuaz"] {
+  --color-bg: 255 255 255;
+  --color-fg: 19 78 74;
+  --color-accent: 13 148 136;
+  --color-bg-alt: 240 253 250;
+  --color-fg-muted: 91 138 133;
+  --color-border: 178 223 219;
+}
+
+@theme inline {
+  --color-bg: rgb(var(--color-bg));
+  --color-fg: rgb(var(--color-fg));
+  --color-accent: rgb(var(--color-accent));
+  --color-bg-alt: rgb(var(--color-bg-alt));
+  --color-fg-muted: rgb(var(--color-fg-muted));
+  --color-border: rgb(var(--color-border));
+}
+
+/* === Base Styles === */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* === Poetry Display === */
+.poem-content {
+  font-family: var(--font-serif), Georgia, serif;
+  line-height: 2;
+  text-align: center;
+}
+
+.poem-content p {
+  margin-bottom: 1.5em;
+}
+
+/* === Prose theme overrides === */
+.prose {
+  --tw-prose-body: var(--color-fg);
+  --tw-prose-headings: var(--color-fg);
+  --tw-prose-bold: var(--color-fg);
+  --tw-prose-links: var(--color-accent);
+}
+
+/* === Tiptap Editor === */
+.tiptap {
+  outline: none;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--color-fg-muted);
+  pointer-events: none;
+  height: 0;
+}
+
+/* === Tezhip Divider === */
+.tezhip-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.tezhip-divider::before,
+.tezhip-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to var(--direction, right),
+    transparent,
+    var(--color-accent),
+    transparent
+  );
+}
+
+.tezhip-divider::before {
+  --direction: right;
+}
+
+.tezhip-divider::after {
+  --direction: left;
+}
+
+/* === Audio Player === */
+.audio-player input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+  outline: none;
+}
+
+.audio-player input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  cursor: pointer;
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-fg-muted);
+}

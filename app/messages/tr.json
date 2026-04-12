@@ -1,0 +1,73 @@
+{
+  "navigation": {
+    "home": "Ana Sayfa",
+    "poems": "Şiirler",
+    "audio": "Sesli Eserler",
+    "about": "Hakkımda",
+    "credits": "Referanslar",
+    "contact": "İletişim",
+    "equipment": "Ekipman"
+  },
+  "home": {
+    "heroTitle": "Kelimelerin Sesi",
+    "featuredPoems": "Öne Çıkan Şiirler",
+    "latestAudio": "Son Sesli Eser",
+    "viewAll": "Tümünü Gör",
+    "listenNow": "Şimdi Dinle"
+  },
+  "poems": {
+    "title": "Şiirler",
+    "readMore": "Devamını Oku",
+    "noPoems": "Henüz şiir eklenmemiş.",
+    "categories": {
+      "all": "Tümü"
+    }
+  },
+  "audio": {
+    "title": "Sesli Eserler",
+    "commercial": "Reklam",
+    "audiobook": "Sesli Kitap",
+    "poetry": "Şiir Seslendirme",
+    "noAudio": "Henüz sesli eser eklenmemiş.",
+    "duration": "Süre",
+    "play": "Oynat",
+    "pause": "Duraklat"
+  },
+  "about": {
+    "title": "Hakkımda"
+  },
+  "credits": {
+    "title": "Referanslar",
+    "testimonials": "Müşteri Yorumları"
+  },
+  "contact": {
+    "title": "İletişim",
+    "nameLabel": "Adınız",
+    "emailLabel": "E-posta Adresiniz",
+    "subjectLabel": "Konu",
+    "messageLabel": "Mesajınız",
+    "submitButton": "Gönder",
+    "successMessage": "Mesajınız başarıyla gönderildi!",
+    "errorMessage": "Bir hata oluştu, lütfen tekrar deneyin."
+  },
+  "equipment": {
+    "title": "Ekipman"
+  },
+  "newsletter": {
+    "title": "Bültene Abone Olun",
+    "placeholder": "E-posta adresiniz",
+    "subscribe": "Abone Ol",
+    "success": "Bültene başarıyla abone oldunuz!",
+    "error": "Bir hata oluştu."
+  },
+  "footer": {
+    "rights": "Tüm hakları saklıdır.",
+    "followMe": "Beni Takip Edin"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Hata",
+    "back": "Geri",
+    "language": "Dil"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "navigation": {
+    "home": "Home",
+    "poems": "Poems",
+    "audio": "Audio Works",
+    "about": "About Me",
+    "credits": "Credits",
+    "contact": "Contact",
+    "equipment": "Equipment"
+  },
+  "home": {
+    "heroTitle": "The Voice of Words",
+    "featuredPoems": "Featured Poems",
+    "latestAudio": "Latest Audio",
+    "viewAll": "View All",
+    "listenNow": "Listen Now"
+  },
+  "poems": {
+    "title": "Poems",
+    "readMore": "Read More",
+    "noPoems": "No poems added yet.",
+    "categories": {
+      "all": "All"
+    }
+  },
+  "audio": {
+    "title": "Audio Works",
+    "commercial": "Commercial",
+    "audiobook": "Audiobook",
+    "poetry": "Poetry Narration",
+    "noAudio": "No audio works added yet.",
+    "duration": "Duration",
+    "play": "Play",
+    "pause": "Pause"
+  },
+  "about": {
+    "title": "About Me"
+  },
+  "credits": {
+    "title": "Credits",
+    "testimonials": "Testimonials"
+  },
+  "contact": {
+    "title": "Contact",
+    "nameLabel": "Your Name",
+    "emailLabel": "Your Email",
+    "subjectLabel": "Subject",
+    "messageLabel": "Your Message",
+    "submitButton": "Send",
+    "successMessage": "Your message has been sent successfully!",
+    "errorMessage": "An error occurred, please try again."
+  },
+  "equipment": {
+    "title": "Equipment"
+  },
+  "newsletter": {
+    "title": "Subscribe to Newsletter",
+    "placeholder": "Your email address",
+    "subscribe": "Subscribe",
+    "success": "Successfully subscribed to the newsletter!",
+    "error": "An error occurred."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "followMe": "Follow Me"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "back": "Back",
+    "language": "Language"
+  }
+}
