@@ -33,6 +33,13 @@ export async function proxy(request: NextRequest) {
     const loginPath = isAdminHost ? "/login" : "/admin/login";
     const authApiPath = isAdminHost ? "/api/auth/" : "/admin/api/auth/";
 
+    // Redirect admin root to dashboard
+    if (pathname === "/" || pathname === "/admin" || pathname === "/admin/") {
+      const url = request.nextUrl.clone();
+      url.pathname = isAdminHost ? "/dashboard" : "/admin/dashboard";
+      return NextResponse.redirect(url);
+    }
+
     // Allow login page and auth API without session check
     if (pathname === loginPath || pathname.startsWith(authApiPath) ||
         pathname === "/admin/login" || pathname.startsWith("/admin/api/auth/")) {
