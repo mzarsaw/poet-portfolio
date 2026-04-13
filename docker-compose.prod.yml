@@ -31,7 +31,7 @@ services:
       NEXT_PUBLIC_ADMIN_URL: ${NEXT_PUBLIC_ADMIN_URL}
       NODE_ENV: production
     volumes:
-      - ./uploads:/app/public/uploads
+      - uploads:/app/public/uploads
     networks:
       - internal
 
@@ -46,7 +46,7 @@ services:
       ADMIN_DOMAIN: ${ADMIN_DOMAIN}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - ./uploads:/srv/uploads
+      - uploads:/srv/uploads
       - caddy_data:/data
       - caddy_config:/config
     depends_on:
@@ -56,6 +56,7 @@ services:
 
 volumes:
   pgdata:
+  uploads:
   caddy_data:
   caddy_config:
 
