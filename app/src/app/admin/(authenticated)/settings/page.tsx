@@ -7,6 +7,9 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
   const [settings, setSettings] = useState<Record<string, string>>({});
+  const [passwordForm, setPasswordForm] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [passwordMessage, setPasswordMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   useEffect(() => {
     fetch("/admin/api/settings").then((res) => res.json()).then(setSettings);
@@ -133,6 +136,73 @@ export default function SettingsPage() {
           </button>
           {saved && <span className="text-sm text-green-600">Kaydedildi!</span>}
         </div>
+
+        {/* Change Password */}
+        <section className="bg-bg rounded-lg border border-border p-6 space-y-4">
+          <h2 className="text-lg font-medium text-fg mb-4">Şifre Değiştir</h2>
+          <div className="max-w-md space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-fg mb-1">Mevcut Şifre</label>
+              <input
+                type="password"
+                value={passwordForm.currentPassword}
+                onChange={(e) => setPasswordForm((prev) => ({ ...prev, currentPassword: e.target.value }))}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-fg mb-1">Yeni Şifre</label>
+              <input
+                type="password"
+                value={passwordForm.newPassword}
+                onChange={(e) => setPasswordForm((prev) => ({ ...prev, newPassword: e.target.value }))}
+                className={inputClass}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-fg mb-1">Yeni Şifre (Tekrar)</label>
+              <input
+                type="password"
+                value={passwordForm.confirmPassword}
+                onChange={(e) => setPasswordForm((prev) => ({ ...prev, confirmPassword: e.target.value }))}
+                className={inputClass}
+              />
+            </div>
+            {passwordMessage && (
+              <p className={`text-sm ${passwordMessage.type === "success" ? "text-green-600" : "text-red-600"}`}>
+                {passwordMessage.text}
+              </p>
+            )}
+            <button
+              onClick={async () => {
+                setPasswordLoading(true);
+                setPasswordMessage(null);
+                try {
+                  const res = await fetch("/admin/api/auth/change-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(passwordForm),
+                  });
+                  const data = await res.json();
+                  if (res.ok) {
+                    setPasswordMessage({ type: "success", text: "Şifre başarıyla değiştirildi" });
+                    setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
+                  } else {
+                    setPasswordMessage({ type: "error", text: data.error || "Bir hata oluştu" });
+                  }
+                } catch {
+                  setPasswordMessage({ type: "error", text: "Bir hata oluştu" });
+                } finally {
+                  setPasswordLoading(false);
+                }
+              }}
+              disabled={passwordLoading || !passwordForm.currentPassword || !passwordForm.newPassword || !passwordForm.confirmPassword}
+              className="px-6 py-2 bg-accent text-bg rounded-md hover:opacity-90 transition-opacity text-sm font-medium disabled:opacity-50"
+            >
+              {passwordLoading ? "Değiştiriliyor..." : "Şifreyi Değiştir"}
+            </button>
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -46,6 +46,7 @@ services:
       ADMIN_DOMAIN: ${ADMIN_DOMAIN}
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./uploads:/srv/uploads
       - caddy_data:/data
       - caddy_config:/config
     depends_on:

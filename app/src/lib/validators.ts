@@ -61,3 +61,12 @@ export const newsletterSchema = z.object({
 });
 
 export const settingsSchema = z.record(z.string(), z.string());
+
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1, "Mevcut şifre gereklidir"),
+  newPassword: z.string().min(8, "Yeni şifre en az 8 karakter olmalıdır"),
+  confirmPassword: z.string().min(1, "Şifre tekrarı gereklidir"),
+}).refine((data) => data.newPassword === data.confirmPassword, {
+  message: "Şifreler eşleşmiyor",
+  path: ["confirmPassword"],
+});
