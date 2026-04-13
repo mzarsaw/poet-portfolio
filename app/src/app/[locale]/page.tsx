@@ -25,156 +25,157 @@ export default async function HomePage() {
 
   return (
     <div>
-      {/* Hero */}
-      <section className="relative py-24 sm:py-36 px-4 overflow-hidden">
-        {/* Decorative background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.04] via-transparent to-transparent pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-accent/[0.03] rounded-full blur-3xl pointer-events-none" />
+      {/* Hero — split layout */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/[0.04] via-transparent to-accent/[0.02] pointer-events-none" />
 
-        <div className="relative max-w-4xl mx-auto text-center">
-          {/* Portrait */}
-          {s.hero_image_path && (
-            <div className="mb-14 flex justify-center">
-              <div className="relative">
-                <div className="absolute -inset-3 bg-gradient-to-br from-accent/20 via-accent/5 to-transparent rounded-full blur-lg" />
-                <div className="absolute -inset-1 border border-accent/10 rounded-full" />
-                <img
-                  src={s.hero_image_path}
-                  alt={siteLogo}
-                  className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full object-cover border-2 border-accent/20 shadow-xl"
-                />
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+          <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+            {/* Portrait side */}
+            {s.hero_image_path && (
+              <div className="flex-shrink-0">
+                <div className="relative">
+                  <div className="absolute -inset-3 bg-gradient-to-br from-accent/15 via-accent/5 to-transparent rounded-full blur-lg" />
+                  <div className="absolute -inset-1 border border-accent/10 rounded-full" />
+                  <img
+                    src={s.hero_image_path}
+                    alt={siteLogo}
+                    className="relative w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 rounded-full object-cover border-2 border-accent/20 shadow-xl"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Text side */}
+            <div className={`flex-1 ${s.hero_image_path ? "text-center md:text-left" : "text-center"}`}>
+              {siteLogo && (
+                <p className="text-xs tracking-[0.3em] uppercase text-accent/60 font-medium mb-4">
+                  {siteLogo}
+                </p>
+              )}
+
+              <div className="mb-6">
+                <h1 className="font-[family-name:var(--font-serif)] text-3xl sm:text-4xl lg:text-5xl font-bold text-fg leading-snug italic">
+                  <span className="text-accent/30 font-[family-name:var(--font-serif)]">&ldquo;</span>
+                  {heroStatement || t("heroTitle")}
+                  <span className="text-accent/30 font-[family-name:var(--font-serif)]">&rdquo;</span>
+                </h1>
+              </div>
+
+              {heroIntro && (
+                <>
+                  <div className={`w-16 h-px bg-accent/20 mb-5 ${s.hero_image_path ? "mx-auto md:mx-0" : "mx-auto"}`} />
+                  <div
+                    className="text-base text-fg-muted leading-relaxed prose max-w-lg"
+                    dangerouslySetInnerHTML={{ __html: ensureHtml(heroIntro) }}
+                  />
+                </>
+              )}
+
+              <div className={`mt-8 flex flex-wrap gap-3 ${s.hero_image_path ? "justify-center md:justify-start" : "justify-center"}`}>
+                <Link
+                  href="/poems"
+                  className="px-7 py-2.5 bg-accent text-bg rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
+                >
+                  {t("explorePoems")}
+                </Link>
+                <Link
+                  href="/audio"
+                  className="px-7 py-2.5 border border-accent/30 text-accent rounded-full text-sm font-medium hover:bg-accent/5 transition-colors"
+                >
+                  {t("listenNow")}
+                </Link>
               </div>
             </div>
-          )}
-
-          {/* Poet name */}
-          {siteLogo && (
-            <p className="text-sm tracking-[0.3em] uppercase text-accent/70 font-medium mb-6">
-              {siteLogo}
-            </p>
-          )}
-
-          {/* Poetic statement */}
-          <div className="mb-12">
-            <span className="block text-accent/30 text-6xl sm:text-7xl font-[family-name:var(--font-serif)] leading-none select-none" aria-hidden="true">&ldquo;</span>
-            <h1 className="font-[family-name:var(--font-serif)] text-3xl sm:text-4xl lg:text-5xl font-bold text-fg leading-snug -mt-6 italic px-4">
-              {heroStatement || t("heroTitle")}
-            </h1>
-            <span className="block text-accent/30 text-6xl sm:text-7xl font-[family-name:var(--font-serif)] leading-none text-right select-none -mt-3 pr-8" aria-hidden="true">&rdquo;</span>
-          </div>
-
-          {/* Brief intro */}
-          {heroIntro && (
-            <div className="max-w-2xl mx-auto">
-              <div className="w-20 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent mx-auto mb-8" />
-              <div
-                className="text-base sm:text-lg text-fg-muted leading-relaxed prose prose-lg mx-auto"
-                dangerouslySetInnerHTML={{ __html: ensureHtml(heroIntro) }}
-              />
-            </div>
-          )}
-
-          {/* CTA */}
-          <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/poems"
-              className="px-8 py-3 bg-accent text-bg rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
-            >
-              {t("explorePoems")}
-            </Link>
-            <Link
-              href="/audio"
-              className="px-8 py-3 border border-accent/30 text-accent rounded-full text-sm font-medium hover:bg-accent/5 transition-colors"
-            >
-              {t("listenNow")}
-            </Link>
           </div>
         </div>
       </section>
 
-      <SectionDivider />
-
       {/* Featured Audio */}
       {featuredAudio && (
-        <section className="py-20 px-4">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-fg text-center mb-10">
-              {t("latestAudio")}
-            </h2>
-            <div className="bg-bg-alt/50 rounded-2xl p-8 border border-border/50 shadow-sm">
-              <p className="text-lg font-[family-name:var(--font-serif)] font-medium text-fg mb-5 text-center italic">
-                {getLocalizedField(featuredAudio, "title", locale)}
-              </p>
-              <AudioPlayer
-                src={featuredAudio.filePath}
-                title={getLocalizedField(featuredAudio, "title", locale)}
-              />
+        <>
+          <SectionDivider />
+          <section className="py-14 px-4">
+            <div className="max-w-2xl mx-auto">
+              <h2 className="font-[family-name:var(--font-serif)] text-xl font-bold text-fg text-center mb-6">
+                {t("latestAudio")}
+              </h2>
+              <div className="bg-bg-alt/50 rounded-2xl p-6 border border-border/50 shadow-sm">
+                <p className="text-lg font-[family-name:var(--font-serif)] font-medium text-fg mb-4 text-center italic">
+                  {getLocalizedField(featuredAudio, "title", locale)}
+                </p>
+                <AudioPlayer
+                  src={featuredAudio.filePath}
+                  title={getLocalizedField(featuredAudio, "title", locale)}
+                />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </>
       )}
-
-      {featuredAudio && <SectionDivider />}
 
       {/* Featured Poems */}
       {featuredPoems.length > 0 && (
-        <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-fg mb-3">
-                {t("featuredPoems")}
-              </h2>
-              <div className="w-12 h-px bg-accent/30 mx-auto" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {featuredPoems.map((poem) => (
-                <Link
-                  key={poem.id}
-                  href={`/poems/${poem.id}`}
-                  className="group block"
-                >
-                  <div className="bg-bg rounded-2xl p-7 border border-border/50 hover:border-accent/30 hover:shadow-lg transition-all duration-300 h-full">
-                    <h3 className="font-[family-name:var(--font-serif)] text-lg font-bold text-fg group-hover:text-accent transition-colors mb-4">
-                      {getLocalizedField(poem, "title", locale)}
-                    </h3>
-                    <div className="w-8 h-px bg-accent/20 mb-4 group-hover:w-12 transition-all duration-300" />
-                    <p className="text-sm text-fg-muted leading-relaxed line-clamp-6 font-[family-name:var(--font-serif)] italic">
-                      {stripHtml(getLocalizedField(poem, "content", locale)).substring(0, 200)}...
-                    </p>
-                  </div>
+        <>
+          <SectionDivider />
+          <section className="py-14 px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="font-[family-name:var(--font-serif)] text-xl font-bold text-fg mb-2">
+                  {t("featuredPoems")}
+                </h2>
+                <div className="w-10 h-px bg-accent/30 mx-auto" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {featuredPoems.map((poem) => (
+                  <Link
+                    key={poem.id}
+                    href={`/poems/${poem.id}`}
+                    className="group block"
+                  >
+                    <div className="bg-bg rounded-xl p-6 border border-border/50 hover:border-accent/30 hover:shadow-lg transition-all duration-300 h-full">
+                      <h3 className="font-[family-name:var(--font-serif)] text-base font-bold text-fg group-hover:text-accent transition-colors mb-3">
+                        {getLocalizedField(poem, "title", locale)}
+                      </h3>
+                      <div className="w-6 h-px bg-accent/20 mb-3 group-hover:w-10 transition-all duration-300" />
+                      <p className="text-sm text-fg-muted leading-relaxed line-clamp-5 font-[family-name:var(--font-serif)] italic">
+                        {stripHtml(getLocalizedField(poem, "content", locale)).substring(0, 160)}...
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+              <div className="text-center mt-8">
+                <Link href="/poems" className="text-sm text-accent hover:underline font-medium">
+                  {t("viewAll")} &rarr;
                 </Link>
-              ))}
+              </div>
             </div>
-            <div className="text-center mt-10">
-              <Link href="/poems" className="text-sm text-accent hover:underline font-medium">
-                {t("viewAll")} &rarr;
-              </Link>
-            </div>
-          </div>
-        </section>
+          </section>
+        </>
       )}
 
       {/* Testimonials */}
       {testimonials.length > 0 && (
         <>
           <SectionDivider />
-          <section className="py-20 px-4">
+          <section className="py-14 px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <h2 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-fg mb-3">
+              <div className="text-center mb-8">
+                <h2 className="font-[family-name:var(--font-serif)] text-xl font-bold text-fg mb-2">
                   {t("testimonials")}
                 </h2>
-                <div className="w-12 h-px bg-accent/30 mx-auto" />
+                <div className="w-10 h-px bg-accent/30 mx-auto" />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {testimonials.map((item) => (
-                  <div key={item.id} className="bg-bg-alt/30 rounded-2xl p-7 border border-border/40">
-                    <div className="text-accent/30 text-3xl font-[family-name:var(--font-serif)] leading-none mb-3">&ldquo;</div>
-                    <p className="text-sm text-fg-muted leading-relaxed italic mb-5">
+                  <div key={item.id} className="bg-bg-alt/30 rounded-xl p-6 border border-border/40">
+                    <div className="text-accent/30 text-2xl font-[family-name:var(--font-serif)] leading-none mb-2">&ldquo;</div>
+                    <p className="text-sm text-fg-muted leading-relaxed italic mb-4">
                       {getLocalizedField(item, "quote", locale)}
                     </p>
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-px bg-accent/20" />
+                      <div className="w-6 h-px bg-accent/20" />
                       <div>
                         <p className="text-sm font-medium text-fg">{item.name}</p>
                         {item.role && <p className="text-xs text-fg-muted">{item.role}</p>}
