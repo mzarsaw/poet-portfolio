@@ -17,7 +17,7 @@ const navLinks = [
   { href: "/equipment", key: "equipment" },
 ] as const;
 
-export default function Header({ profileImage }: { profileImage?: string }) {
+export default function Header({ profileImage, siteLogo }: { profileImage?: string; siteLogo?: string }) {
   const t = useTranslations("navigation");
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function Header({ profileImage }: { profileImage?: string }) {
               />
             )}
             <span className="font-[family-name:var(--font-serif)] text-xl font-bold text-fg">
-              Şair
+              {siteLogo || "Şair"}
             </span>
           </Link>
 

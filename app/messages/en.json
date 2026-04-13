@@ -13,7 +13,9 @@
     "featuredPoems": "Featured Poems",
     "latestAudio": "Latest Audio",
     "viewAll": "View All",
-    "listenNow": "Listen Now"
+    "listenNow": "Listen Now",
+    "explorePoems": "Explore Poems",
+    "testimonials": "What They Say"
   },
   "poems": {
     "title": "Poems",

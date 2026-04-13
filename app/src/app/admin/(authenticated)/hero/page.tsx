@@ -58,27 +58,46 @@ export default function HeroEditorPage() {
         </button>
       </div>
 
-      {/* Preview */}
+      {/* Preview - matches homepage hero design */}
       {showPreview && (
-        <div className="mb-8 bg-bg rounded-lg border border-border p-8 text-center">
-          <p className="text-xs text-fg-muted mb-4">Önizleme</p>
-          {settings.hero_image_path && (
-            <div className="flex justify-center mb-6">
-              <img
-                src={settings.hero_image_path}
-                alt="Portrait"
-                className="w-40 h-40 rounded-full object-cover border-4 border-border"
-              />
+        <div className="mb-8 bg-bg rounded-xl border border-border p-10 text-center overflow-hidden relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] to-transparent pointer-events-none" />
+          <p className="text-xs text-fg-muted mb-6 relative">Önizleme</p>
+          <div className="relative">
+            {settings.hero_image_path && (
+              <div className="flex justify-center mb-8">
+                <div className="relative">
+                  <div className="absolute -inset-2 bg-gradient-to-br from-accent/20 via-accent/5 to-transparent rounded-full blur-md" />
+                  <img
+                    src={settings.hero_image_path}
+                    alt="Portrait"
+                    className="relative w-44 h-44 rounded-full object-cover border-2 border-accent/20 shadow-lg"
+                  />
+                </div>
+              </div>
+            )}
+            {settings.site_logo_tr && (
+              <p className="text-sm tracking-[0.3em] uppercase text-accent/70 font-medium mb-4">
+                {settings.site_logo_tr}
+              </p>
+            )}
+            <div className="mb-6">
+              <span className="block text-accent/30 text-5xl font-[family-name:var(--font-serif)] leading-none select-none">&ldquo;</span>
+              <h2 className="font-[family-name:var(--font-serif)] text-3xl font-bold text-fg italic -mt-4 px-4">
+                {settings.hero_statement_tr || "Başlık burada görünecek"}
+              </h2>
+              <span className="block text-accent/30 text-5xl font-[family-name:var(--font-serif)] leading-none text-right select-none -mt-2">&rdquo;</span>
             </div>
-          )}
-          <h2 className="font-[family-name:var(--font-serif)] text-3xl font-bold text-fg mb-4">
-            {settings.hero_statement_tr || "Başlık burada görünecek"}
-          </h2>
-          {settings.hero_intro_tr && (
-            <p className="text-fg-muted max-w-2xl mx-auto whitespace-pre-line">
-              {settings.hero_intro_tr}
-            </p>
-          )}
+            {settings.hero_intro_tr && (
+              <div className="max-w-xl mx-auto">
+                <div className="w-16 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent mx-auto mb-6" />
+                <div
+                  className="text-fg-muted leading-relaxed prose mx-auto"
+                  dangerouslySetInnerHTML={{ __html: settings.hero_intro_tr }}
+                />
+              </div>
+            )}
+          </div>
         </div>
       )}
 

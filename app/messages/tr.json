@@ -13,7 +13,9 @@
     "featuredPoems": "Öne Çıkan Şiirler",
     "latestAudio": "Son Sesli Eser",
     "viewAll": "Tümünü Gör",
-    "listenNow": "Şimdi Dinle"
+    "listenNow": "Şimdi Dinle",
+    "explorePoems": "Şiirleri Keşfet",
+    "testimonials": "Ne Dediler"
   },
   "poems": {
     "title": "Şiirler",

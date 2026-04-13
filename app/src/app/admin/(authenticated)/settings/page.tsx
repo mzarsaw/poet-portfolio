@@ -71,16 +71,40 @@ export default function SettingsPage() {
           </div>
         </section>
 
+        {/* Site Branding */}
+        <section className="bg-bg rounded-lg border border-border p-6 space-y-4">
+          <h2 className="text-lg font-medium text-fg mb-4">Site Logo / Marka</h2>
+          <p className="text-sm text-fg-muted">Bu isim site başlığında, navigasyonda ve footer&apos;da görünür.</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-fg mb-1">Logo Adı (TR)</label>
+              <input value={settings.site_logo_tr || ""} onChange={(e) => updateSetting("site_logo_tr", e.target.value)} placeholder="Örn: Emre Koç" className={inputClass} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-fg mb-1">Logo Name (EN)</label>
+              <input value={settings.site_logo_en || ""} onChange={(e) => updateSetting("site_logo_en", e.target.value)} placeholder="E.g. Emre Koc" className={inputClass} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-fg mb-1">Slogan (TR)</label>
+              <input value={settings.site_tagline_tr || ""} onChange={(e) => updateSetting("site_tagline_tr", e.target.value)} placeholder="Örn: Kelimelerin sesi" className={inputClass} />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-fg mb-1">Tagline (EN)</label>
+              <input value={settings.site_tagline_en || ""} onChange={(e) => updateSetting("site_tagline_en", e.target.value)} placeholder="E.g. The voice of words" className={inputClass} />
+            </div>
+          </div>
+        </section>
+
         {/* Site Settings */}
         <section className="bg-bg rounded-lg border border-border p-6 space-y-4">
           <h2 className="text-lg font-medium text-fg mb-4">Site Bilgileri</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-fg mb-1">Site Başlığı (TR)</label>
+              <label className="block text-sm font-medium text-fg mb-1">Tarayıcı Başlığı (TR)</label>
               <input value={settings.site_title_tr || ""} onChange={(e) => updateSetting("site_title_tr", e.target.value)} className={inputClass} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-fg mb-1">Site Title (EN)</label>
+              <label className="block text-sm font-medium text-fg mb-1">Browser Title (EN)</label>
               <input value={settings.site_title_en || ""} onChange={(e) => updateSetting("site_title_en", e.target.value)} className={inputClass} />
             </div>
             <div>
