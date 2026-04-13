@@ -15,34 +15,54 @@ export default async function HomePage() {
     prisma.siteSetting.findMany(),
   ]);
 
-  const settingsMap: Record<string, string> = {};
-  for (const s of settings) settingsMap[s.key] = s.value;
+  const s: Record<string, string> = {};
+  for (const setting of settings) s[setting.key] = setting.value;
 
-  const heroStatement = settingsMap[`hero_statement_${locale}`] || settingsMap.hero_statement_tr || "";
-  const heroIntro = settingsMap[`hero_intro_${locale}`] || settingsMap.hero_intro_tr || "";
+  const heroStatement = s[`hero_statement_${locale}`] || s.hero_statement_tr || "";
+  const heroIntro = s[`hero_intro_${locale}`] || s.hero_intro_tr || "";
 
   return (
     <div>
       {/* Hero */}
-      <section className="py-20 sm:py-28 text-center px-4">
-        <div className="max-w-3xl mx-auto">
-          <h1 className="font-[family-name:var(--font-serif)] text-4xl sm:text-5xl lg:text-6xl font-bold text-fg leading-tight mb-6">
-            {heroStatement || t("heroTitle")}
-          </h1>
-          {settingsMap.hero_image_path && (
-            <div className="mt-8 flex justify-center">
-              <img
-                src={settingsMap.hero_image_path}
-                alt=""
-                className="w-40 h-40 rounded-full object-cover border-4 border-border"
-              />
+      <section className="relative py-24 sm:py-32 px-4 overflow-hidden">
+        {/* Decorative gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-accent/[0.03] via-transparent to-transparent pointer-events-none" />
+
+        <div className="relative max-w-4xl mx-auto text-center">
+          {/* Portrait */}
+          {s.hero_image_path && (
+            <div className="mb-12 flex justify-center">
+              <div className="relative">
+                <div className="absolute -inset-2 bg-gradient-to-br from-accent/20 via-accent/5 to-transparent rounded-full blur-md" />
+                <img
+                  src={s.hero_image_path}
+                  alt=""
+                  className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full object-cover border-2 border-accent/20 shadow-lg"
+                />
+              </div>
             </div>
           )}
+
+          {/* Poetic statement */}
+          <div className="mb-10">
+            <div className="inline-block">
+              <span className="block text-accent/40 text-5xl sm:text-6xl font-[family-name:var(--font-serif)] leading-none select-none" aria-hidden="true">&ldquo;</span>
+              <h1 className="font-[family-name:var(--font-serif)] text-3xl sm:text-4xl lg:text-5xl font-bold text-fg leading-snug -mt-4 italic">
+                {heroStatement || t("heroTitle")}
+              </h1>
+              <span className="block text-accent/40 text-5xl sm:text-6xl font-[family-name:var(--font-serif)] leading-none text-right select-none -mt-2" aria-hidden="true">&rdquo;</span>
+            </div>
+          </div>
+
+          {/* Brief intro */}
           {heroIntro && (
-            <div
-              className="mt-6 text-lg text-fg-muted max-w-2xl mx-auto leading-relaxed prose prose-lg"
-              dangerouslySetInnerHTML={{ __html: ensureHtml(heroIntro) }}
-            />
+            <div className="max-w-2xl mx-auto">
+              <div className="w-16 h-px bg-accent/30 mx-auto mb-8" />
+              <div
+                className="text-base sm:text-lg text-fg-muted leading-relaxed prose prose-lg mx-auto"
+                dangerouslySetInnerHTML={{ __html: ensureHtml(heroIntro) }}
+              />
+            </div>
           )}
         </div>
       </section>
@@ -51,13 +71,13 @@ export default async function HomePage() {
 
       {/* Featured Audio */}
       {featuredAudio && (
-        <section className="py-12 px-4">
+        <section className="py-16 px-4">
           <div className="max-w-2xl mx-auto">
-            <h2 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-fg text-center mb-6">
+            <h2 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-fg text-center mb-8">
               {t("latestAudio")}
             </h2>
-            <div className="bg-bg-alt rounded-lg p-6 border border-border">
-              <p className="text-lg font-medium text-fg mb-4">
+            <div className="bg-bg-alt/50 rounded-xl p-8 border border-border/60 backdrop-blur-sm">
+              <p className="text-lg font-[family-name:var(--font-serif)] font-medium text-fg mb-5 text-center">
                 {getLocalizedField(featuredAudio, "title", locale)}
               </p>
               <AudioPlayer
@@ -73,9 +93,9 @@ export default async function HomePage() {
 
       {/* Featured Poems */}
       {featuredPoems.length > 0 && (
-        <section className="py-12 px-4">
+        <section className="py-16 px-4">
           <div className="max-w-4xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-10">
               <h2 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-fg">
                 {t("featuredPoems")}
               </h2>
@@ -88,13 +108,14 @@ export default async function HomePage() {
                 <Link
                   key={poem.id}
                   href={`/poems/${poem.id}`}
-                  className="bg-bg-alt rounded-lg p-6 border border-border hover:border-accent transition-colors group"
+                  className="group bg-bg rounded-xl p-6 border border-border/60 hover:border-accent/40 hover:shadow-md transition-all duration-300"
                 >
-                  <h3 className="font-[family-name:var(--font-serif)] text-lg font-bold text-fg group-hover:text-accent transition-colors mb-3">
+                  <h3 className="font-[family-name:var(--font-serif)] text-lg font-bold text-fg group-hover:text-accent transition-colors mb-4">
                     {getLocalizedField(poem, "title", locale)}
                   </h3>
-                  <p className="text-sm text-fg-muted line-clamp-4">
-                    {stripHtml(getLocalizedField(poem, "content", locale)).substring(0, 150)}...
+                  <div className="w-8 h-px bg-accent/30 mb-4" />
+                  <p className="text-sm text-fg-muted leading-relaxed line-clamp-5 italic">
+                    {stripHtml(getLocalizedField(poem, "content", locale)).substring(0, 180)}...
                   </p>
                 </Link>
               ))}

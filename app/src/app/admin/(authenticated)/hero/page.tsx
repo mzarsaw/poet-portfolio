@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { BilingualInput } from "@/components/admin/BilingualInput";
-import { Upload, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
+import UploadButton from "@/components/admin/UploadButton";
 
 export default function HeroEditorPage() {
   const [loading, setLoading] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [uploading, setUploading] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
   const [settings, setSettings] = useState<Record<string, string>>({});
 
@@ -19,18 +19,8 @@ export default function HeroEditorPage() {
     setSettings((prev) => ({ ...prev, [key]: value }));
   }
 
-  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    const res = await fetch("/admin/api/media", { method: "POST", body: formData });
-    if (res.ok) {
-      const data = await res.json();
-      update("hero_image_path", data.filePath);
-    }
-    setUploading(false);
+  function handleImageUpload(data: { filePath: string }) {
+    update("hero_image_path", data.filePath);
   }
 
   async function handleSave() {
@@ -109,11 +99,11 @@ export default function HeroEditorPage() {
               </div>
             )}
             <div>
-              <label className="flex items-center gap-2 px-4 py-2 bg-accent text-bg rounded-md hover:opacity-90 transition-opacity text-sm font-medium cursor-pointer">
-                <Upload size={16} />
-                {uploading ? "Yükleniyor..." : "Fotoğraf Yükle"}
-                <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-              </label>
+              <UploadButton
+                accept="image/*"
+                label="Fotoğraf Yükle"
+                onUpload={handleImageUpload}
+              />
               {settings.hero_image_path && (
                 <button
                   type="button"

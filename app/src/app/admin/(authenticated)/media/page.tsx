@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { Upload, Trash2, Image as ImageIcon, Music } from "lucide-react";
+import { Trash2, Music } from "lucide-react";
+import UploadButton from "@/components/admin/UploadButton";
 
 interface MediaItem {
   id: string;
@@ -14,30 +14,11 @@ interface MediaItem {
 }
 
 export default function MediaManagerPage() {
-  const router = useRouter();
   const [items, setItems] = useState<MediaItem[]>([]);
-  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     fetch("/admin/api/media").then((res) => res.json()).then(setItems);
   }, []);
-
-  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = e.target.files;
-    if (!files) return;
-    setUploading(true);
-    for (const file of Array.from(files)) {
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await fetch("/admin/api/media", { method: "POST", body: formData });
-      if (res.ok) {
-        const newItem = await res.json();
-        setItems((prev) => [newItem, ...prev]);
-      }
-    }
-    setUploading(false);
-    e.target.value = "";
-  }
 
   async function handleDelete(id: string) {
     if (!confirm("Bu dosyayı silmek istediğinize emin misiniz?")) return;
@@ -57,11 +38,12 @@ export default function MediaManagerPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-[family-name:var(--font-serif)] text-2xl font-bold text-fg">Medya</h1>
-        <label className="flex items-center gap-2 px-4 py-2 bg-accent text-bg rounded-md hover:opacity-90 transition-opacity text-sm font-medium cursor-pointer">
-          <Upload size={16} />
-          {uploading ? "Yükleniyor..." : "Dosya Yükle"}
-          <input type="file" accept="image/*,audio/*" multiple onChange={handleUpload} className="hidden" />
-        </label>
+        <UploadButton
+          accept="image/*,audio/*"
+          multiple
+          label="Dosya Yükle"
+          onUpload={(data) => setItems((prev) => [data as unknown as MediaItem, ...prev])}
+        />
       </div>
 
       {items.length === 0 ? (

@@ -7,6 +7,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
+import { prisma } from "@/lib/prisma";
 
 export default async function PublicLayout({
   children,
@@ -22,10 +23,12 @@ export default async function PublicLayout({
   }
 
   const messages = await getMessages();
+  const heroImageSetting = await prisma.siteSetting.findUnique({ where: { key: "hero_image_path" } });
+  const profileImage = heroImageSetting?.value || "";
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <Header />
+      <Header profileImage={profileImage} />
       <main className="flex-1">{children}</main>
       <Footer />
     </NextIntlClientProvider>

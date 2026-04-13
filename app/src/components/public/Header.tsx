@@ -17,7 +17,7 @@ const navLinks = [
   { href: "/equipment", key: "equipment" },
 ] as const;
 
-export default function Header() {
+export default function Header({ profileImage }: { profileImage?: string }) {
   const t = useTranslations("navigation");
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -26,8 +26,17 @@ export default function Header() {
     <header className="border-b border-border bg-bg/95 backdrop-blur-sm sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16">
-          <Link href="/" className="font-[family-name:var(--font-serif)] text-xl font-bold text-fg">
-            Şair
+          <Link href="/" className="flex items-center gap-3">
+            {profileImage && (
+              <img
+                src={profileImage}
+                alt=""
+                className="w-8 h-8 rounded-full object-cover border border-border"
+              />
+            )}
+            <span className="font-[family-name:var(--font-serif)] text-xl font-bold text-fg">
+              Şair
+            </span>
           </Link>
 
           {/* Desktop nav */}

@@ -65,7 +65,7 @@ export default function Sidebar() {
 
       <div className="p-4 border-t border-border">
         <a
-          href="/"
+          href={process.env.NEXT_PUBLIC_SITE_URL || "/"}
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-fg-muted hover:text-fg transition-colors"
