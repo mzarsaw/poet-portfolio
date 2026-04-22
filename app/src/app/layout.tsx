@@ -1,6 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
 import { prisma } from "@/lib/prisma";
@@ -17,23 +16,13 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-async function getSettings() {
+async function getTheme() {
   try {
-    const rows = await prisma.siteSetting.findMany();
-    const s: Record<string, string> = {};
-    for (const r of rows) s[r.key] = r.value;
-    return s;
+    const setting = await prisma.siteSetting.findUnique({ where: { key: "theme" } });
+    return setting?.value || "murekep";
   } catch {
-    return {} as Record<string, string>;
+    return "murekep";
   }
-}
-
-export async function generateMetadata(): Promise<Metadata> {
-  const s = await getSettings();
-  return {
-    title: s.site_title_tr || "Şair Portfolyo",
-    description: s.site_description_tr || "Şiir ve seslendirme portfolyosu",
-  };
 }
 
 export default async function RootLayout({
@@ -41,8 +30,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const s = await getSettings();
-  const theme = s.theme || "murekep";
+  const theme = await getTheme();
 
   return (
     <html
